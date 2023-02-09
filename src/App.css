@@ -13,6 +13,21 @@
   }
 }
 
+.Nav ul{
+  list-style: none;
+  margin:1rem;
+}
+
+.Footer{
+  background-color: #495E57;
+  color:white;
+  padding: 3rem;
+}
+
+/* .list{
+float: left;
+} */
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
