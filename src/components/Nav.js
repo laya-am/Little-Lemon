@@ -1,6 +1,6 @@
 import logo from "./../Logo.svg";
-import {HStack, Box, Center} from "@chakra-ui/react"
-
+import {HStack, Box, Center} from "@chakra-ui/react";
+import {Link} from "react-router-dom";
 
 function Nav(){
     return (
@@ -12,27 +12,27 @@ function Nav(){
         <img src={logo} alt="logo" />
         </li>
         <li>
-        <a href="url">Home</a>
+        <Link to="/">Home</Link>
         </li>
         <li>
-        <a href="url">About</a>
+        <Link to="/about">About</Link>
         </li>
         <li>
-        <a href="url">Menu</a>
+        <Link to="/menu">Menu</Link>
         </li>
         <li>
-        <a href="url">Reservations</a>
+        <Link to="/reservations">Reservations</Link>
         </li>
         <li>
-        <a href="url">Order Online</a>
+        <Link to="/orderonline">Order Online</Link>
         </li>
         <li>
-        <a href="url">Login</a>
+        <Link to="/login">Login</Link>
         </li>
         </HStack>
         </Center>
 </ul>
-</Box> 
+</Box>
     )
 }
 

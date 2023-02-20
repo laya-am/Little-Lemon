@@ -1,16 +1,18 @@
 import {Box} from "@chakra-ui/react";
+import Header from "./Header";
 import Highlights from "./Highlights";
 import Testimonials from "./Testimonials";
 import About from "./About";
 
-function Main(){
+function Homepage(){
     return (
 <Box className="main">
+    <Header />
     <Highlights />
     <Testimonials />
     <About />
-</Box>
-    )
+    </Box>
+)
 }
 
-export default Main;
+export default Homepage;
