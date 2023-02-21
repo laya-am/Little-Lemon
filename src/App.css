@@ -122,6 +122,18 @@ flex-direction: column;
 
 }
 
+.reservation-page{
+  display:grid;
+  justify-content: center;
+  padding:5%;
+}
+
+.form{
+  display: grid;
+  min-width: 30rem;
+  padding: 5%;
+}
+
 .App-link {
   color: #61dafb;
 }
