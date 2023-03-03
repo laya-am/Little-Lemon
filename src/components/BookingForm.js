@@ -4,33 +4,46 @@ import {
     Select,
     Input,
     FormErrorMessage} from "@chakra-ui/react";
-import { useFormik } from "formik";
+import { useEffect } from "react";
+import { useFormik, Form } from "formik";
 import * as Yup from 'yup';
 import YellowButton from "./YellowButton";
+import {fetchAPI, submitAPI} from "./Data";
+// import AvailableTimes from "./AvailableTimes";
 
 function BookingForm(){
     const formik = useFormik({
         initialValues: {
           name:"",
           date:"",
-          time:"17:00",
+          time:[],
           numberOfGuests:"",
           occasion:"",
         },
         onSubmit: (values) => {
-            console.log(values)
+            console.log("Form data",values)
         },
     
         validationSchema: Yup.object({
           name:Yup.string().matches(/^[a-zA-Z ]*$/, "Please enter a valid name").required("Required"),
           date:Yup.date().required("Required"),
           time:Yup.mixed().required("Required"),
-          numberOfGuests:Yup.string().matches(/^[0-9]+$/, "Please add numbers only.").max(10,"For a total of more than 10 guests kindly please contact us via phone.").required("Required"),
+          numberOfGuests:Yup.number().max(10,"For a total of more than 10 guests kindly please contact us via phone.").required("Required"),
         }),
-      });
+    });
+
+
+    const selectedDate= formik.values.date;
+
+      useEffect(() => {
+        const formattedDate = new Date(selectedDate);
+        formik.setFieldValue('time', fetchAPI(formattedDate));
+      }, [selectedDate]);
+
 
     return(
-        <form className="form" onSubmit={formik.handleSubmit}>
+
+        <Form className="form" onSubmit={formik.handleSubmit}>
             <FormControl  isRequired isInvalid={!!formik.errors.name && formik.touched.name}>
                 <FormLabel htmlFor="name">Enter Your Name</FormLabel>
                 <Input value={formik.values.name} name="name" onChange={formik.handleChange} onBlur={formik.handleBlur} />
@@ -43,18 +56,12 @@ function BookingForm(){
                 <FormErrorMessage>{formik.errors.date}</FormErrorMessage>
             </FormControl>
             <br />
-            <FormControl  isRequired isInvalid={formik.errors.time && formik.touched.time}>
                 <FormLabel htmlFor="time">Choose Time</FormLabel>
-                <Select value={formik.values.time} name="time" onChange={formik.handleChange} onBlur={formik.handleBlur} >
-                    <option value="17">17:00</option>
-                    <option value="18">18:00</option>
-                    <option value="19">19:00</option>
-                    <option value="20">20:00</option>
-                    <option value="21">21:00</option>
-                    <option value="22">22:00</option>
+                <Select name="time" value={formik.values.time} onChange={formik.handleChange} >
+                {(formik.values.time).map(time=>(
+                <option key={time} value={time}>{time}</option>
+                ))}
                 </Select>
-                <FormErrorMessage>{formik.errors.time}</FormErrorMessage>
-            </FormControl>
             <br />
             <FormControl  isRequired isInvalid={formik.errors.numberOfGuests && formik.touched.numberOfGuests}>
                 <FormLabel htmlFor="numberOfGuests">Number of Guests</FormLabel>
@@ -62,7 +69,7 @@ function BookingForm(){
                 <FormErrorMessage>{formik.errors.numberOfGuests}</FormErrorMessage>
             </FormControl>
             <br />
-            <FormControl  isRequired isInvalid={formik.errors.occasion && formik.touched.occasion}>
+            <FormControl isInvalid={formik.errors.occasion && formik.touched.occasion}>
                 <Select value={formik.values.occasion} name="occasion" onChange={formik.handleChange} placeholder="Occasion">
                     <option value="birthday">Birthday</option>
                     <option value="anniversary">Anniversary</option>
@@ -70,8 +77,9 @@ function BookingForm(){
                 </Select>
                 <FormErrorMessage>{formik.errors.occasion}</FormErrorMessage>
             </FormControl>
-            <YellowButton type="submit" text="Book the table" />
-        </form>
+            <YellowButton text="Book the table" />
+        </Form>
+        // </Formik>
     )
 }
 
