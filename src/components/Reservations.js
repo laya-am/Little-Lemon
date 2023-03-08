@@ -3,7 +3,9 @@ import BookingForm from "./BookingForm";
 function Reservations(){
     return(
         <div className="reservation-page">
-            <h1> Reservation a Table</h1>
+        <div className="reserve-title">
+        <h1>Book a Table</h1>
+        </div>
             <BookingForm />
         </div>
     )
